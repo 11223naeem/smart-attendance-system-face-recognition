@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+        input {
+            padding: 8px;
+            margin: 8px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        canvas {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Attendance Dashboard</h2>
+
+    <form method="POST">
+        <input type="text" name="roll_no" placeholder="Roll Number" required>
+        <input type="text" name="name" placeholder="Name" required>
+        <button type="submit">View Attendance</button>
+    </form>
+
+    {% if records %}
+        <h3>Attendance for {{ name }} (Roll No: {{ roll_no }})</h3>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+            {% for date, time in records %}
+            <tr>
+                <td>{{ date }}</td>
+                <td>{{ time }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <canvas id="attendanceChart" width="400" height="200"></canvas>
+       <script>
+    const presentDays = JSON.parse('{{ total_days | tojson }}');
+
+    const absentDays = 30 - presentDays;
+
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Present', 'Absent'],
+            datasets: [{
+                data: [presentDays, absentDays],
+                backgroundColor: ['#4CAF50', '#FF5252']
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
+
+    {% endif %}
+</body>
+</html>

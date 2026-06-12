@@ -1,0 +1,475 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <title>Smart Attendance</title>
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #e6ebf2);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            scroll-behavior: smooth;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        .dark-mode {
+            background: linear-gradient(135deg, #0d0d0d, #1c1c1c);
+            color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 42px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .dark-mode h1 {
+            color: #ffffff;
+        }
+
+        /* Banner */
+        .banner-img {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin-bottom: 50px;
+            animation: zoomIn 1.2s ease;
+        }
+
+        /* Cards */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark-mode .card {
+            background: #1e1e1e;
+            box-shadow: 0 6px 20px rgba(255,255,255,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card a button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .card a button:hover {
+            background: linear-gradient(135deg, #2980b9, #1f6391);
+            transform: scale(1.08);
+        }
+
+        /* Toggle button */
+        .toggle-container {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 55px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0;
+            right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 26px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(28px);
+        }
+
+        /* Attendance Preview */
+        .attendance-preview {
+            margin-top: 60px;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .dark-mode .attendance-preview {
+            background: #1e1e1e;
+            color: white;
+        }
+
+        .view-dashboard-btn {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #27ae60, #219150);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .view-dashboard-btn:hover {
+            background: linear-gradient(135deg, #219150, #1b7942);
+            transform: scale(1.05);
+        }
+
+        /* Defaulter card */
+        .card.defaulter-card {
+            width: 320px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+            margin: 40px auto;
+            transition: transform 0.3s;
+        }
+
+        .dark-mode .card.defaulter-card {
+            background: #1e1e1e;
+        }
+
+        .card.defaulter-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card-content h3 {
+            font-size: 1.4rem;
+            color: #e74c3c;
+            margin-bottom: 12px;
+        }
+
+        .card-content .btn-view {
+            padding: 10px 20px;
+            border: none;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .card-content .btn-view:hover {
+            background: linear-gradient(135deg, #c0392b, #962d22);
+        }
+
+        /* How it works */
+        .how-it-works {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 90px 20px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 44px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ffcc33;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+        }
+
+        .step {
+            flex: 1 1 250px;
+            background: rgba(255,255,255,0.12);
+            padding: 35px 20px;
+            border-radius: 16px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            min-width: 260px;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .step-icon {
+            font-size: 52px;
+            background: #ffcc33;
+            color: #1e3c72;
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding: 40px 20px;
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffcc33;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+    <!-- Rest of your HTML (same as you pasted) -->
+
+<body>
+    <div class="toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="darkToggle">
+            <span class="slider"></span>
+        </label>
+        <span style="font-size: 14px;">Dark Mode</span>
+    </div>
+
+
+    <div class="container">
+        <h1>Welcome to Smart Attendance System</h1>
+        <img class="banner-img" src="{{ url_for('static', filename='images/smart_attendance_banner.jpg') }}" alt="Smart Attendance Banner">
+        <div class="card-container">
+            <div class="card">
+                 <img src="{{ url_for('static', filename='images/student_banner.jpg') }}" alt="Attendance Chart">
+                <a href="/register_student"><button>new Student Register</button></a>
+            </div>
+
+            <div class="card">
+                 <img src="{{ url_for('static', filename='images/teacher_forms.jpg') }}" alt="Attendance Chart">
+
+                <a href="/teacher_form"><button>Student Attendance</button></a>
+            </div>
+            <div class="card">
+                 <img src="{{ url_for('static', filename='images/teacher_banner.jpg') }}" alt="Attendance Chart">
+
+                <a href="/teacher_login"><button>Check Attendance</button></a>
+            </div>
+
+        <div class="card">
+             <img src="{{ url_for('static', filename='images/chart_banner.jpg') }}" alt="Attendance Chart">
+
+            <a href="/attendance_report"><button>View Attendance Chart</button></a>
+        </div>
+
+        <div class="card">
+      <img src="{{ url_for('static', filename='images/List_of_all_register_student.jpg') }}" alt="Attendance Chart">
+
+    <a href="/teacher_check_allregister_student_login_form"><button>View List Of Registered Students</button></a>
+</div>
+
+
+            
+        </div>
+    </div>
+
+    
+
+<!-- Attendance Preview Section -->
+<div class="attendance-preview">
+    <h2>📊 Student Attendance Overview</h2>
+    <canvas id="attendancePreviewChart" height="120"></canvas>
+    <a href="/student_dashboard">
+        <button class="view-dashboard-btn">View Full Dashboard</button>
+    </a>
+</div>
+
+<div class="card defaulter-card">
+    <img src="{{ url_for('static', filename='images/defaulter.jpg') }}" alt="Defaulter List">
+    <div class="card-content">
+        <h3>Defaulter List</h3>
+        <p>Students with less than 60% attendance in the last 6 months.</p>
+        <a href="/defaulters"><button class="btn-view">View Defaulters List</button></a>
+    </div>
+</div>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="how-it-works">
+  <div class="container">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Simple, Fast & Smart Attendance System</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">👤</div>
+        <h3>Create Account</h3>
+        <p>Teachers and students register to access the system securely.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-icon">📋</div>
+        <h3>Setup Class</h3>
+        <p>Teachers set up class details and open the attendance portal.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-icon">📸</div>
+        <h3>Mark Attendance</h3>
+        <p>Students capture their image and attendance is marked instantly.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-icon">📊</div>
+        <h3>View Reports</h3>
+        <p>Attendance data is automatically stored and available for reports.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+    <footer>
+        <div class="footer-content">
+            <h3>About Smart Attendance System</h3>
+            <p>This Smart Attendance System is created by <strong>Naeem Abuzar Shaikh</strong>.  
+            It uses facial recognition to mark attendance accurately and automatically. <br>
+            <p>Email-id:- <strong>
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=naeemshaikh1552@gmail.com" target="_blank">
+   naeemshaikh1552@gmail.com
+</a>
+</strong></p><br>
+            <p>for any kind information you can send email .you will get answer under <strong>24hour</strong></p>
+
+            <strong>Benefits:</strong><br>
+            - Eliminates proxy attendance<br>
+            - Saves time for teachers<br>
+            - Provides digital record of attendance<br>
+            - Secure and easy to use
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('darkToggle');
+        toggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        const ctxPrev = document.getElementById('attendancePreviewChart').getContext('2d');
+
+    // Example data (replace with actual data from Flask if needed)
+    const presentDays = 20;
+    const absentDays = 10;
+
+    new Chart(ctxPrev, {
+        type: 'doughnut',
+        data: {
+            labels: ['Present', 'Absent'],
+            datasets: [{
+                data: [presentDays, absentDays],
+                backgroundColor: ['#4CAF50', '#FF5252']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+    </script>
+</body>
+</html>

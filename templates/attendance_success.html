@@ -1,0 +1,66 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Success</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      background: linear-gradient(120deg, #d4fc79, #96e6a1);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      color: #2e7d32;
+      font-size: 36px;
+      animation: popUp 0.5s ease;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    a {
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #43a047;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #388e3c;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popUp {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h2>🎉 Attendance Marked!</h2>
+  <p>{{ name }} (Roll No: {{ roll_no }})</p>
+  <p>Date: {{ date }} | Time: {{ time }} | lecture : {{lecture}}</p>
+  <a href="/student_login">Next Student</a>
+  <a href="/teacher_role_authenticate">🔙 Go Back Home</a>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Registered Students</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 70%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h2>List of Registered Students</h2>
+
+    <!-- UPDATED ➜ Download Buttons -->
+     <!-- 
+    <div style="text-align:center; margin-bottom: 15px;">
+        <a href="/students/export/excel">
+            <button>📥 Export Excel</button>
+        </a>
+
+        <a href="/students/export/pdf">
+            <button>📄 Export PDF</button>
+        </a>
+    </div>
+
+    <table>
+        <tr>
+            <th>Roll Number</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        {% for roll_no, name in students %}
+        <tr>
+            <td>{{ roll_no }}</td>
+            <td>{{ name }}</td>
+            <td>
+                <a href="/delete_student/{{ roll_no }}" 
+                   onclick="return confirm('Are you sure you want to delete this student?');">
+                    <button style="background:red; color:white; border:none; padding:6px 10px; border-radius:5px;">
+                        Delete
+                    </button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html> 
+
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registered Students</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* UPDATED ➜ Search box */
+        .search-box {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            padding: 8px;
+            width: 250px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* UPDATED ➜ Highlight style */
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        table {
+            width: 70%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+<h2>List of Registered Students</h2>
+
+<!-- Search Field -->
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchStudent()">
+</div>
+
+<!-- Download Buttons -->
+<div style="text-align:center; margin-bottom: 15px;">
+    <a href="/students/export/excel">
+        <button>📥 Export Excel</button>
+    </a>
+
+    <a href="/students/export/pdf">
+        <button>📄 Export PDF</button>
+    </a>
+</div>
+
+<!-- UPDATED ➜ Added ID -->
+<table id="studentTable">
+    <tr>
+        <th>Roll Number</th>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+
+    {% for roll_no, name in students %}
+    <tr>
+        <td>{{ roll_no }}</td>
+        <td class="student-name">{{ name }}</td> <!-- UPDATED -->
+        <td>
+            <a href="/delete_student/{{ roll_no }}" 
+               onclick="return confirm('Are you sure you want to delete this student?');">
+                <button style="background:red; color:white; border:none; padding:6px 10px; border-radius:5px;">
+                    Delete
+                </button>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- UPDATED ➜ Search + Highlight -->
+<script>
+function searchStudent() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let rows = document.querySelectorAll("#studentTable tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        let nameCell = rows[i].querySelector(".student-name");
+
+        if (nameCell) {
+            let originalText = nameCell.textContent;
+            let lowerText = originalText.toLowerCase();
+
+            if (lowerText.includes(input) && input !== "") {
+                rows[i].style.display = "";
+
+                // Highlight matching text
+                let regex = new RegExp(`(${input})`, "gi");
+                nameCell.innerHTML = originalText.replace(regex, `<span class="highlight">$1</span>`);
+            } 
+            else if (input === "") {
+                rows[i].style.display = "";
+                nameCell.innerHTML = originalText; // reset
+            } 
+            else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Denied</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #f44336, #e57373);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+      animation: fadeIn 1.2s ease;
+    }
+
+    h2 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+      margin: 10px 0 30px;
+    }
+
+    a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ffffff;
+      color: #d32f2f;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    a:hover {
+      background: #ffebee;
+    }
+
+    .lottie-container {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 30px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.0/lottie.min.js"></script>
+</head>
+<body>
+
+  <div class="lottie-container" id="lottie-denied"></div>
+
+  <h2>Invalid Password and Name </h2>
+  
+  <a href="/teacher_role_authenticate">🔙 Go back to Login</a>
+
+  <script>
+    lottie.loadAnimation({
+      container: document.getElementById('lottie-denied'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://assets9.lottiefiles.com/packages/lf20_gjmecwii.json' // "access denied" animation
+    });
+  </script>
+
+</body>
+</html>

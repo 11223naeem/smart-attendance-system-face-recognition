@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Form</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #6c5ce7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #5a4dcf;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h2>Teacher Form</h2>
+      <form method="POST" action="/teacher_form">
+        <input type="text" name="teacher_name" placeholder="Teacher Name" required>
+        <input type="text" name="lecture_name" placeholder="Lecture Name" required>
+
+        <select name="class_name" required>
+          <option value="">-- Select Class --</option>
+          <option value="FYIT">FYIT</option>
+          <option value="SYIT">SYIT</option>
+          <option value="TYIT">TYIT</option>
+          <option value="FYCS">FYCS</option>
+          <option value="SYCS">SYCS</option>
+          <option value="TYCS">TYCS</option>
+        </select>
+
+        <button type="submit">Start Attendance</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

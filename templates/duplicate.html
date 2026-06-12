@@ -1,0 +1,66 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Duplicate Attendance</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #ffe6e6; padding: 50px; }
+        h1 { color: red; }
+    </style>
+</head>
+<body>
+    <h1>⚠ Attendance Already Marked</h1>
+    <p>{{ name }} (Roll No: {{ roll_no }})</p>
+    <p>Your attendance for <b>{{ lecture }}</b> on <b>{{ date }}</b> is already recorded.</p>
+    <p>If this is your second lecture for today, please enter it like <b>"{{ lecture }} 2"</b>.</p>
+    <a href="/">Go Back</a>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Duplicate Attendance</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #ffe6e6; padding: 50px; }
+        h1 { color: red; }
+        #timer { font-size: 18px; font-weight: bold; color: blue; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>⚠ Attendance Already Marked</h1>
+    <p>{{ name }} (Roll No: {{ roll_no }})</p>
+    <p>Your attendance for <b>{{ lecture }}</b> on <b>{{ date }}</b> is already recorded.</p>
+   
+    <!-- New 45-min rule message -->
+    <p>You can mark your second lecture only <b>after 45 minutes</b> from the previous one.</p>
+    <p id="timer"></p>
+
+    <a href="/student_login">Go Back</a>
+
+    <script>
+    // Safe Jinja to JavaScript variable
+    var minutesLeft = "{{ minutes_left }}";
+    minutesLeft = parseInt(minutesLeft, 10);
+    var secondsLeft = minutesLeft * 60;
+
+    function updateTimer() {
+        var minutes = Math.floor(secondsLeft / 60);
+        var seconds = secondsLeft % 60;
+        document.getElementById("timer").innerHTML =
+            "You can mark your second lecture in: " +
+            minutes + "m " + seconds + "s";
+        
+        if (secondsLeft > 0) {
+            secondsLeft--;
+            setTimeout(updateTimer, 1000);
+        } else {
+            document.getElementById("timer").innerHTML = "✅ You can mark now!";
+        }
+    }
+
+    window.onload = updateTimer;
+</script>
+
+</body>
+</html>

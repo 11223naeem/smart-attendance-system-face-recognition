@@ -1,0 +1,379 @@
+<!-- <!DOCTYPE html>
+<html>
+<head><title>Register Student</title></head>
+<body>
+    <h2>New Student Registration</h2>
+    <form id="registerForm" method="POST" action="/register_student" enctype="multipart/form-data">
+    <label for="roll_no">Roll Number:</label>
+    <input type="text" name="roll_no" id="roll_no" required><br><br>
+
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required><br><br>
+
+    <video id="video" width="320" height="240" autoplay></video><br>
+    <button type="button" onclick="capturePhoto()">Capture Photo</button>
+    <p id="photoCount">Captured: 0/4</p>
+    <div id="preview"></div>
+
+    <button type="submit">Submit Registration</button>
+</form>
+
+<script>
+    const video = document.getElementById('video');
+    const preview = document.getElementById('preview');
+    let photoCount = 0;
+    let capturedImages = [];
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        video.srcObject = stream;
+    });
+
+    function capturePhoto() {
+        if (photoCount >= 4) {
+            alert("You already captured 4 photos.");
+            return;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 320;
+        canvas.height = 240;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob(blob => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'images';
+            input.value = '';
+            const file = new File([blob], `photo${photoCount + 1}.jpg`, { type: "image/jpeg" });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            input.files = dataTransfer.files;
+            document.getElementById('registerForm').appendChild(input);
+            capturedImages.push(blob);
+
+            // Show preview
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(blob);
+            img.width = 100;
+            img.style.margin = '5px';
+            preview.appendChild(img);
+
+            photoCount++;
+            document.getElementById('photoCount').innerText = `Captured: ${photoCount}/4`;
+        }, 'image/jpeg');
+    }
+
+    // 🟡 Intercept form and append actual FileList manually
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+        if (photoCount < 4) {
+            alert('Please capture 4 photos first.');
+            e.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>New Student Registration</title>
+</head>
+<body>
+    <h2>Register New Student</h2>
+
+    <label for="roll_no">Roll Number:</label>
+    <input type="text" id="roll_no" required><br><br>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br><br>
+
+    <video id="video" width="320" height="240" autoplay></video><br>
+    <button type="button" onclick="capturePhoto()">Capture Photo</button>
+    <p id="photoCount">Captured: 0/4</p>
+    <div id="preview"></div>
+
+    <br>
+    <button onclick="submitForm()">Submit Registration</button>
+
+    <script>
+        const video = document.getElementById('video');
+        const preview = document.getElementById('preview');
+        let photoCount = 0;
+        const capturedBlobs = [];
+
+        // Start webcam
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+            video.srcObject = stream;
+        });
+
+        function capturePhoto() {
+            if (photoCount >= 4) {
+                alert("Already captured 4 photos.");
+                return;
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 320;
+            canvas.height = 240;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(blob => {
+                capturedBlobs.push(blob);
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(blob);
+                img.width = 80;
+                img.style.margin = '5px';
+                preview.appendChild(img);
+                photoCount++;
+                document.getElementById('photoCount').innerText = `Captured: ${photoCount}/4`;
+            }, 'image/jpeg');
+        }
+
+        function submitForm() {
+            const roll_no = document.getElementById('roll_no').value.trim();
+            const name = document.getElementById('name').value.trim();
+
+            if (!roll_no || !name) {
+                alert("Please enter roll number and name.");
+                return;
+            }
+
+            if (capturedBlobs.length < 4) {
+                alert("Capture at least 4 photos.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("roll_no", roll_no);
+            formData.append("name", name);
+
+            capturedBlobs.forEach((blob, index) => {
+                formData.append("images", blob, `photo${index + 1}.jpg`);
+            });
+
+            fetch('/register_student', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.text())
+            .then(html => {
+                document.body.innerHTML = html;
+            })
+            .catch(err => alert("Error: " + err));
+        }
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Student Registration</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      width: 85%;
+      height: 90vh;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+      animation: slideIn 0.8s ease;
+      background: white;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .form-section {
+      width: 50%;
+      padding: 40px;
+      box-sizing: border-box;
+      background: white;
+    }
+
+    .form-section h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #2c3e50;
+    }
+
+    .form-section label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .form-section input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    #video {
+      margin-top: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: none;
+      background: #6e8efb;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #4e6cfb;
+    }
+
+    #preview img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .image-section {
+      width: 50%;
+      background: url('/static/images/student_illustration.png') no-repeat center center;
+      background-size: cover;
+    }
+
+    @media screen and (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .form-section, .image-section {
+        width: 100%;
+        height: auto;
+      }
+
+      .image-section {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+      <h2>Register New Student</h2>
+
+      <label for="roll_no">Roll Number:</label>
+      <input type="text" id="roll_no" required>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+
+      <video id="video" width="320" height="240" autoplay></video>
+      <button type="button" onclick="capturePhoto()">Capture Photo</button>
+      <p id="photoCount">Captured: 0/4</p>
+      <div id="preview"></div>
+
+      <button onclick="submitForm()">Submit Registration</button>
+    </div>
+
+    <div class="image-section"></div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const preview = document.getElementById('preview');
+    let photoCount = 0;
+    const capturedBlobs = [];
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+      video.srcObject = stream;
+    });
+
+    function capturePhoto() {
+      if (photoCount >= 4) {
+        alert("Already captured 4 photos.");
+        return;
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 320;
+      canvas.height = 240;
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      canvas.toBlob(blob => {
+        capturedBlobs.push(blob);
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(blob);
+        img.style.margin = '5px';
+        preview.appendChild(img);
+        photoCount++;
+        document.getElementById('photoCount').innerText = `Captured: ${photoCount}/4`;
+      }, 'image/jpeg');
+    }
+
+    function submitForm() {
+      const roll_no = document.getElementById('roll_no').value.trim();
+      const name = document.getElementById('name').value.trim();
+
+      if (!roll_no || !name) {
+        alert("Please enter roll number and name.");
+        return;
+      }
+
+      if (capturedBlobs.length < 4) {
+        alert("Capture at least 4 photos.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("roll_no", roll_no);
+      formData.append("name", name);
+
+      capturedBlobs.forEach((blob, index) => {
+        formData.append("images", blob, `photo${index + 1}.jpg`);
+      });
+
+      fetch('/register_student', {
+        method: 'POST',
+        body: formData
+      })
+        .then(res => res.text())
+        .then(html => {
+          document.body.innerHTML = html;
+        })
+        .catch(err => alert("Error: " + err));
+    }
+  </script>
+</body>
+</html>

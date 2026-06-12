@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Error</title>
+  <style>
+    body {
+      background-color: #ff4d4d; /* 🔴 Red background */
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+    }
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    a button {
+      background: white;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    a button:hover {
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>{{ message }}</h2>
+    <a href="/register_student"><button>Go Back</button></a>
+  </div>
+</body>
+</html>

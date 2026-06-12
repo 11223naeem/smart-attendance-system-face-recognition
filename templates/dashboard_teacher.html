@@ -1,0 +1,577 @@
+<!-- templates/dashboard_teacher.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Dashboard</title>
+</head>
+<body>
+  <h2>Attendance Records</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Roll Number</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in records %}
+      <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e3f2fd);
+      color: #2c3e50;
+      animation: fadeBg 3s ease;
+    }
+
+    .report-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #4CAF50, #2E8B57);
+        color: white;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 30px;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .report-btn:hover {
+        background: linear-gradient(135deg, #45a049, #1f6f4a);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .report-btn:active {
+        transform: scale(0.97);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 40px;
+      animation: slideDown 1s ease-out;
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 1000px;
+      background: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      animation: fadeIn 1.2s ease;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    th {
+      background-color: #1976d2;
+      color: white;
+      font-size: 18px;
+    }
+
+    tr:hover {
+      background-color: #f1f8ff;
+      transition: background 0.3s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeBg {
+      from { background-color: #ffffff; }
+      to { background: linear-gradient(to right, #e0f7fa, #e3f2fd); }
+    }
+
+    .download-btn {
+    padding: 8px 15px;
+    background: #3498db;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background 0.3s ease;
+}
+
+.download-btn:hover {
+    background: #2980b9;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <h2>📋 Attendance Records</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Roll Number</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Lecture</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in records %}
+      <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>{{ r[4] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div style="margin-bottom: 20px; text-align: right;">
+    <a href="/export/excel" class="download-btn">📥 Export Excel</a>
+    <a href="/export/pdf" class="download-btn">📄 Export PDF</a>
+</div>
+
+
+ <a href="/attendance_report" class="report-btn">📊 View Attendance Report</a>
+
+
+
+</body>
+</html> -->
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e3f2fd);
+      color: #2c3e50;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
+
+    .filter-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      margin: 0 10px;
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 1000px;
+      background: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    th {
+      background-color: #1976d2;
+      color: white;
+      font-size: 18px;
+    }
+
+    tr:hover {
+      background-color: #f1f8ff;
+      transition: background 0.3s ease;
+    }
+
+    .download-btn {
+      padding: 8px 15px;
+      background: #3498db;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-left: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: #2980b9;
+    }
+
+    .report-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #4CAF50, #2E8B57);
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .report-btn:hover {
+      background: linear-gradient(135deg, #45a049, #1f6f4a);
+    }
+
+  </style>
+</head>
+<body>
+
+  <h2>📋 Attendance Records</h2>
+-->
+  <!-- Filter Section -->
+  <!---
+  <div class="filter-box">
+    <label for="lecture">Filter by Lecture: </label>
+    <select id="lecture" onchange="filterTable()">
+      <option value="">All</option>
+      {% for lec in lectures %}
+      <option value="{{ lec }}">{{ lec }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="date">Filter by Date: </label>
+    <select id="date" onchange="filterTable()">
+      <option value="">All</option>
+      {% for d in dates %}
+      <option value="{{ d }}">{{ d }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="class">Filter by Class: </label>
+  <select id="class" onchange="filterTable()">
+    <option value="">All</option>
+    {% for c in classes %}
+    <option value="{{ c }}">{{ c }}</option>
+    {% endfor %}
+  </select>
+  </div>
+
+  <!-- Attendance Table -->
+   <!---
+  <table id="attendanceTable">
+    <thead>
+      <tr>
+        <th>Roll Number</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Lecture</th>
+        <th>class Name</th>
+        <th>Teacher Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in records %}
+      <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>{{ r[4] }}</td>
+        <td>{{ r[5] }}</td>
+        <td>{{ r[6] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div style="margin: 20px; text-align: right;">
+    <a href="/export/excel" class="download-btn">📥 Export Excel</a>
+    <a href="/export/pdf" class="download-btn">📄 Export PDF</a>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="/attendance_report" class="report-btn">📊 View Attendance Report</a>
+  </div>
+-->
+  <!-- JavaScript Filter -->
+   <!--
+  <script>
+    function filterTable() {
+      var lecture = document.getElementById("lecture").value.toLowerCase();
+      var date = document.getElementById("date").value.toLowerCase();
+      var className = document.getElementById("class").value.toLowerCase();
+      var table = document.getElementById("attendanceTable");
+      var trs = table.getElementsByTagName("tr");
+
+      for (var i = 1; i < trs.length; i++) {
+        var tds = trs[i].getElementsByTagName("td");
+        var rowLecture = tds[4].textContent.toLowerCase();
+        var rowDate = tds[2].textContent.toLowerCase();
+        var rowClass = tds[5].textContent.toLowerCase();
+
+        if ((lecture === "" || rowLecture === lecture) &&
+            (date === "" || rowDate === date) &&
+            (className === "" || rowClass === className)) {
+          trs[i].style.display = "";
+        } else {
+          trs[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e3f2fd);
+      color: #2c3e50;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
+
+    .filter-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    select, input { /* UPDATED ➜ added input styling */
+      padding: 10px;
+      border-radius: 5px;
+      margin: 0 10px;
+    }
+
+    /* UPDATED ➜ highlight */
+    .highlight {
+      background-color: yellow;
+      font-weight: bold;
+    }
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 1000px;
+      background: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    th {
+      background-color: #1976d2;
+      color: white;
+      font-size: 18px;
+    }
+
+    tr:hover {
+      background-color: #f1f8ff;
+    }
+
+    .download-btn {
+      padding: 8px 15px;
+      background: #3498db;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+
+    .report-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #4CAF50, #2E8B57);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+    }
+
+  </style>
+</head>
+<body>
+
+<h2>📋 Attendance Records</h2>
+
+<!-- Filter Section -->
+<div class="filter-box">
+
+  <label>Lecture: </label>
+  <select id="lecture" onchange="filterTable()">
+    <option value="">All</option>
+    {% for lec in lectures %}
+    <option value="{{ lec }}">{{ lec }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Date: </label>
+  <select id="date" onchange="filterTable()">
+    <option value="">All</option>
+    {% for d in dates %}
+    <option value="{{ d }}">{{ d }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Class: </label>
+  <select id="class" onchange="filterTable()">
+    <option value="">All</option>
+    {% for c in classes %}
+    <option value="{{ c }}">{{ c }}</option>
+    {% endfor %}
+  </select>
+
+  <!-- UPDATED ➜ Teacher Search -->
+  <label>Teacher: </label>
+  <input type="text" id="teacherSearch" placeholder="Enter teacher name..." onkeyup="filterTable()">
+
+</div>
+
+<!-- Table -->
+<table id="attendanceTable">
+<thead>
+<tr>
+  <th>Roll Number</th>
+  <th>Name</th>
+  <th>Date</th>
+  <th>Time</th>
+  <th>Lecture</th>
+  <th>Class</th>
+  <th>Teacher Name</th>
+</tr>
+</thead>
+
+<tbody>
+{% for r in records %}
+<tr>
+  <td>{{ r[0] }}</td>
+  <td>{{ r[1] }}</td>
+  <td>{{ r[2] }}</td>
+  <td>{{ r[3] }}</td>
+  <td>{{ r[4] }}</td>
+  <td>{{ r[5] }}</td>
+  <td class="teacher-name">{{ r[6] }}</td> <!-- UPDATED -->
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<div style="margin: 20px; text-align: right;">
+  <a href="/export/excel" class="download-btn">📥 Export Excel</a>
+  <a href="/export/pdf" class="download-btn">📄 Export PDF</a>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+  <a href="/attendance_report" class="report-btn">📊 View Attendance Report</a>
+</div>
+
+<!-- UPDATED ➜ JS -->
+<script>
+function filterTable() {
+  let lecture = document.getElementById("lecture").value.toLowerCase();
+  let date = document.getElementById("date").value.toLowerCase();
+  let className = document.getElementById("class").value.toLowerCase();
+  let teacherInput = document.getElementById("teacherSearch").value.toLowerCase();
+
+  let rows = document.querySelectorAll("#attendanceTable tbody tr");
+
+  rows.forEach(row => {
+    let cells = row.getElementsByTagName("td");
+
+    let rowLecture = cells[4].textContent.toLowerCase();
+    let rowDate = cells[2].textContent.toLowerCase();
+    let rowClass = cells[5].textContent.toLowerCase();
+    let teacherCell = row.querySelector(".teacher-name");
+    let teacherText = teacherCell.textContent;
+
+    let lowerTeacher = teacherText.toLowerCase();
+
+    // Reset highlight
+    teacherCell.innerHTML = teacherText;
+
+    if ((lecture === "" || rowLecture === lecture) &&
+        (date === "" || rowDate === date) &&
+        (className === "" || rowClass === className) &&
+        (teacherInput === "" || lowerTeacher.includes(teacherInput))) {
+
+      row.style.display = "";
+
+      // UPDATED ➜ Highlight teacher name
+      if (teacherInput !== "") {
+        let regex = new RegExp(`(${teacherInput})`, "gi");
+        teacherCell.innerHTML = teacherText.replace(regex, `<span class="highlight">$1</span>`);
+      }
+
+    } else {
+      row.style.display = "none";
+    }
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Authentication</title>
+    <style>
+        body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Rubik', sans-serif;
+      background: linear-gradient(135deg, #af71ac, #b17575); /* soft green modern */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      animation: fadeIn 0.9s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-image {
+      width: 400px;
+      height: 200px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background: #a52e81;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #683ca1;
+      transform: scale(1.03);
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+        form { display: inline-block; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+    <h2>Student Authentication Required</h2>
+    <img src="/static/images/student_authen.jpg" class="login-image" alt="list of all register student">
+    
+    
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="POST" action="/student_role_authentication">
+        <input type="text" name="username" placeholder="Enter student Username" required>
+        <input type="password" name="password" placeholder="Enter Password" required>
+        <button type="submit">Proceed</button>
+    </form>
+
+</div>
+</body>
+</html>

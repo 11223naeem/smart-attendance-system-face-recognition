@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Attendance System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+    height: 100vh;
+    background: url("{{ url_for('static', filename='images/front_image.jpg') }}") 
+                no-repeat center center/cover;
+    position: relative;
+}
+
+.hero button {
+    position: absolute;
+    bottom: 40px;     /* image ke niche */
+    left: 50%;        /* center horizontally */
+    transform: translateX(-50%);
+    
+    padding: 18px 50px;
+    background: white;
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+
+        /* Common Section Format */
+        .section {
+            display: flex;
+            padding: 80px 10%;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .section img {
+            width: 420px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.3);
+        }
+
+        .section-text {
+            flex: 1;
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .title {
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Alternate layout */
+        .reverse {
+            flex-direction: row-reverse;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO SECTION -->
+<div class="hero">
+    <button onclick="window.location.href='/role'">CONTINUE SYSTEM</button>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section">
+    <img src="{{ url_for('static', filename='images/benefit1.jpg') }}">
+    <div class="section-text">
+        <div class="title">Fast & Automatic Attendance</div>
+        No need for manual roll calls.  
+        The system instantly marks attendance using AI face recognition.
+    </div>
+</div>
+
+<!-- SECTION 2 (reverse layout) -->
+<div class="section reverse">
+    <img src="{{ url_for('static', filename='images/benefit2.jpg') }}">
+    <div class="section-text">
+        <div class="title">High Accuracy</div>
+        With modern facial recognition algorithms, the system ensures accurate matching.  
+        Eliminates proxy attendance completely.
+    </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+    <img src="{{ url_for('static', filename='images/benefit3.jpg') }}">
+    <div class="section-text">
+        <div class="title">Easy for Teachers & Students</div>
+        Teachers can view all registered students and attendance.
+        Students can log in and check their attendance securely.
+    </div>
+</div>
+
+<footer>
+    © 2025 Smart Attendance System | Made by Naeem Shaikh
+</footer>
+
+</body>
+</html>

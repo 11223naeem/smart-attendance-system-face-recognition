@@ -27,13 +27,24 @@ This project is an AI-based attendance system that uses face recognition to auto
 
 ## 📸 Screenshots
 
-### 🔐 Login Page
 
-![Login](screenshots/login.png)
+### 🔐 Home Page
+![Login](screenshots/home1.png)
+![Login](screenshots/home2.png)
 
-### 🧑‍🎓 Student Registration
+### 🔐 Login Page for student
+
+![Register](screenshots/register1.png)
+
+### 🔐 Login Page for Teacher
+![Register](screenshots/register2.png)
+
+
+
+### 🧑‍🎓 Student Registration and Teacher Registration
 
 ![Register](screenshots/register.png)
+
 
 ### 📷 Face Capture
 
@@ -42,6 +53,14 @@ This project is an AI-based attendance system that uses face recognition to auto
 ### ✅ Attendance Result
 
 ![Result](screenshots/result.png)
+
+### ✅ Teacher role interface
+![Result](screenshots/teacher_interface1.png)
+![Result](screenshots/teacher_interface2.png)
+
+### ✅ Defaulter List
+![Result](screenshots/Defaulter.png)
+
 
 ---
 

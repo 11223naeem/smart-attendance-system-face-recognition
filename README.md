@@ -1,81 +1,84 @@
 # 🎓 Smart Attendance System (Face Recognition)
 
 ## 📌 Overview
+
 This project is an AI-based attendance system that uses face recognition to automate attendance and prevent proxy.
 
+---
+
 ## 🚀 Features
-- Student Registration
-- Face Detection & Recognition
-- Automatic Attendance Marking
-- Duplicate Prevention
-- Attendance Reports
+
+* Student Registration
+* Face Detection & Recognition
+* Automatic Attendance Marking
+* Duplicate Prevention
+* Attendance Reports
+
+---
 
 ## 🛠 Tech Stack
-- Python
-- Flask
-- OpenCV
-- SQLite
+
+* Python
+* Flask
+* OpenCV
+* SQLite
+
+---
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+
+![Login](screenshots/login.png)
+
+### 🧑‍🎓 Student Registration
+
+![Register](screenshots/register.png)
+
+### 📷 Face Capture
+
+![Capture](screenshots/capture.png)
+
+### ✅ Attendance Result
+
+![Result](screenshots/result.png)
+
+---
 
 ## ▶️ Run Project
+
 ```bash
 pip install -r requirements.txt
 python app.py
-
-
----
-
-## 2️⃣ Upload Screenshots 📸 (IMPORTANT FOR EXAM)
-
-Take screenshots of:
-- Login page
-- Student register
-- Face capture
-- Attendance result
-
-Then upload in GitHub → Add inside README
+```
 
 ---
 
-## 3️⃣ Clean Your Project (VERY IMPORTANT ⚠️)
+## 📂 Project Structure
 
-From your screenshot, I suggest:
-
-### ❌ REMOVE (or ignore):
-- `your_database.db` (duplicate)
-- `faces/` (too heavy unless required)
-
-### ✅ KEEP:
-- `app.py`
-- `templates/`
-- `static/`
-- `requirements.txt`
-- `attendance.db` (only if needed)
+```
+smart_attendance/
+│── app.py
+│── requirements.txt
+│── templates/
+│── static/
+│── screenshots/
+```
 
 ---
 
-# 🎤 If Examiner Asks
+## ⚠️ Notes
 
-Say this confidently:
-
-> I used Git for version control. I initialized the repository locally, added files, committed changes, and pushed the project to GitHub. I also maintained a proper README and project structure for better understanding.
-
----
-
-# ⚠️ COMMON ERRORS (DON’T PANIC)
-
-### ❌ git not recognized
-→ Install Git again
-
-### ❌ permission denied
-→ Login again or use GitHub token
+* Make sure your webcam is connected
+* Avoid uploading `.db` files
+* Add `.gitignore` for unnecessary files
 
 ---
 
-# 🔥 NEXT LEVEL (OPTIONAL BUT PRO)
+## 👨‍💻 Author
 
-Later you can do:
+* Naeem Shaikh
 
-```bash
-git add .
-git commit -m "Added new feature"
-git push
+---
+
+## ⭐ If you like this project, give it a star!

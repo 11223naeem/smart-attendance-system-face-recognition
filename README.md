@@ -3,6 +3,8 @@
 ## 📌 Overview
 
 This project is an AI-based attendance system that uses face recognition to automate attendance and prevent proxy.
+## See live demo:  https://11223naeem.github.io/smart-attendance-system-face-recognition/ | Feel free to use but credit appreciated and a ⭐ to repo ;)
+
 
 ---
 
